@@ -13,15 +13,21 @@ Standard way to enable elytron audit log
 ```
 
 ## Custom
-Custom way to enable elytron audit log 
-If you don't define the two System Properties the default will be:
-- ELYTRON_FORMAT_MESSAGE = Date:{DATE} - User:{USER} - Outcome:{OUTCOME}
-- ELYTRON_FORMAT_DATE = "yyyy-MM-dd HH:mm:ss"
+Custom way to enable elytron audit log    
+
+In order to install the module you can use the jboss_cli.sh with this command   
+```
+$EAP_HOME/bin/jboss_cli.sh -c --command="module add --name=it.mauiroma --resources=elytron-audit-module/target/elytron-audit-module-1.0-SNAPSHOT.jar --dependencies=org.wildfly.security.elytron-private,org.jboss.logging"
+```
+
+### EAP Configuration
+If you don't define the two System Properties the default will be:   
+- ELYTRON_FORMAT_MESSAGE = Date:{DATE} - User:{USER} - Outcome:{OUTCOME}    
+- ELYTRON_FORMAT_DATE = "yyyy-MM-dd HH:mm:ss"    
+
 ```
 /system-property=ELYTRON_FORMAT_MESSAGE:add(value="|Red Hat JBoss EAP|jboss-instance|jboss-ver|1|authentication|low|rt={DATE} duser={USER} ec.activity=login ec.outcome={OUTCOME}")
 /system-property=ELYTRON_FORMAT_DATE:add(value="yyyy-MM-dd HH:mm:ss")
-
-module add --name=it.mauiroma --resources=target/elytron-audit-module-1.0-SNAPSHOT.jar --dependencies=org.wildfly.security.elytron-private,org.jboss.logging
 
 /subsystem=logging/file-handler=elytron_audit:add(file={path=elytron.log,relative-to=jboss.server.log.dir},formatter=%s%n)
 /subsystem=logging/logger=ELYTRON:add(category=ELYTRON, handlers=[elytron_audit], use-parent-handlers=false)
