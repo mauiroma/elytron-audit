@@ -2,7 +2,7 @@
 
 <module xmlns="urn:jboss:module:1.1" name="it.mauiroma">
     <resources>
-        <resource-root path="elytron-audit-1.0-SNAPSHOT.jar"/>
+        <resource-root path="elytron-audit-module-1.0-SNAPSHOT.jar"/>
     </resources>
     <dependencies>
         <module name="org.wildfly.security.elytron-private"/>
